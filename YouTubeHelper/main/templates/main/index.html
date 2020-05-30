@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Eagle</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'main/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-wrapper" style="background-color: rgb({{ r }}, {{ g }}, {{ b }})">
+                <a href="" class="logo">
+                    <img src="{% static 'main/logo.png' %}" alt="Logo">
+                </a>
+                <ul class="navbar">
+                    <li>
+                        <a href="">Поиск</a>
+                    </li>
+                    <li>
+                        <a href="">Понравившиеся видео</a>
+                    </li>
+                    <li>
+                        <a href="">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <br>
+            <form method="post" action="">
+                {% csrf_token %}
+                <input type=text name="keyword"></input>
+                <button type="submit">Поиск</button>
+            </form>
+
+            <br><br>
+            
+            {% for video in found_videos %}
+            <a class="video-link" href="https://www.youtube.com/watch?v={{ video.video_id }}">
+                <div class="video">
+                    <div class="video-preview">
+                        <img src="{{ video.preview_url }}" alt="Video preview">
+                    </div>
+                    <div class="video-info">
+                        <div class="video-main-info">
+                            <div class="video-meta">
+                                <div class="video-title">
+                                    {{ video.title }}
+                                </div>
+                                <div class="video-channel">
+                                    {{ video.channel_title }}
+                                </div>
+                            </div>
+                            <div class="video-like">
+                                <form class="set-like-form">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="video_id" value="{{ video.video_id }}">
+                                    <input type="submit" class="set-like" value="+"></input>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="video-description">
+                            {{ video.description }}
+                        </div>
+                    </div>
+                </div> 
+            </a>
+            {% endfor %}
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="{% static 'main/script.js' %}"></script>
+</body>
+</html>
