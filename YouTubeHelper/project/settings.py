@@ -125,3 +125,4 @@ STATIC_URL = '/static/'
 
 
 AUTH_USER_MODEL = 'users.CustomUser'
+YOUTUBE_API_KEY = 'AIzaSyA3aU4WPGe6uVCJGoDKIEWQlss4S7jNZI8'

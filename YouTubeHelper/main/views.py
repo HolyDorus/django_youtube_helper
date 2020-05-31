@@ -18,7 +18,7 @@ def index(request):
         if 'keyword' in request.POST:
             keyword = request.POST['keyword']
 
-            yt = YouTubeAPI('AIzaSyA3aU4WPGe6uVCJGoDKIEWQlss4S7jNZI8')
+            yt = YouTubeAPI(settings.YOUTUBE_API_KEY)
             found_videos = yt.find_videos(keyword, maxResults=5)
 
             context = {
