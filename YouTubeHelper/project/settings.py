@@ -22,6 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'n(u&j0$at#7nyo(6w+-$vtljs)2ktac@8$$yb$(wppz#+bq#)n'
 
+# YouTube Data API Key
+YOUTUBE_API_KEY = 'AIzaSyA3aU4WPGe6uVCJGoDKIEWQlss4S7jNZI8'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -108,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 
@@ -122,7 +125,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
-
+# New Auntification user model
 AUTH_USER_MODEL = 'users.CustomUser'
-YOUTUBE_API_KEY = 'AIzaSyA3aU4WPGe6uVCJGoDKIEWQlss4S7jNZI8'
