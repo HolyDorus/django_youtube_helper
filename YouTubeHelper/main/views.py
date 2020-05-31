@@ -4,6 +4,8 @@ from django.http import JsonResponse
 
 from .youtubeapi import YouTubeAPI
 from project import settings
+from . import models
+
 
 def index(request):
 
@@ -33,3 +35,18 @@ def index(request):
             return JsonResponse({'ok': 'super'})
 
     return render(request, 'main/index.html')
+
+
+def liked(request):
+    if request.method == 'GET':
+        yt = YouTubeAPI(settings.YOUTUBE_API_KEY)
+
+        # liked_videos_ids = request.user.liked_videos.# %%
+        # models.LikedVideos.objects.
+        found_videos = yt.get_details_about_videos(('BL_nFPi8ib0', '1yDkh9_eaDQ', 'DDHFvbxh3Go', 'eHpuISRUdbs'))
+
+        context = {
+            'liked_videos': found_videos
+        }
+
+        return render(request, 'main/liked.html', context)

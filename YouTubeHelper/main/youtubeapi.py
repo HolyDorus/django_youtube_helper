@@ -54,12 +54,23 @@ class YouTubeAPI:
         if not response.ok:
             return []
 
+        def get_short_description(description):
+            if len(description) <= 150:
+                return description
+
+            return ' '.join(description[:150].split()[:-1]) + '...'
+
         details_about_videos = []
 
         for video in response.json()['items']:
+            short_description = get_short_description(
+                video['snippet']['description']
+            )
+
             video_details = {
                 'video_id': video['id'],
                 'title': video['snippet']['title'],
+                'short_description': short_description,
                 'description': video['snippet']['description'],
                 'channel_title': video['snippet']['channelTitle'],
                 'channel_id': video['snippet']['channelId'],

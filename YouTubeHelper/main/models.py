@@ -24,7 +24,7 @@ class LikedVideos(models.Model):
     class Meta:
         verbose_name = 'Liked video'
         verbose_name_plural = 'Liked videos'
-        ordering = ['date_time']
+        ordering = ['-date_time']
 
     def __str__(self):
         return self.video_id
@@ -49,7 +49,7 @@ class SearchStory(models.Model):
     class Meta:
         verbose_name = 'Search query'
         verbose_name_plural = 'Search story'
-        ordering = ['date_time']
+        ordering = ['-date_time']
 
     def __str__(self):
         return self.search_query
