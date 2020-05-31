@@ -14,6 +14,14 @@
 
             <br><br>
             
+            <!-- <div class="video-like">
+                <form class="set-like-form" onsubmit="myFormSubmitHandler(event);">
+                    {% csrf_token %}
+                    <input type="hidden" name="video_id" value="aas">
+                    <input type="submit" class="set-like" value="+"></input>
+                </form>
+            </div> -->
+
             {% for video in found_videos %}
                 <a class="video-link" href="{% url 'main:watch' %}?v={{ video.video_id }}">
                     <div class="video">
@@ -31,7 +39,7 @@
                                     </div>
                                 </div>
                                 <div class="video-like">
-                                    <form class="set-like-form">
+                                    <form class="set-like-form" onsubmit="myFormSubmitHandler(event);">
                                         {% csrf_token %}
                                         <input type="hidden" name="video_id" value="{{ video.video_id }}">
                                         <input type="submit" class="set-like" value="+"></input>

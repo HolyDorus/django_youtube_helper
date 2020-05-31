@@ -29,9 +29,13 @@ def index(request):
 
             return render(request, 'main/index.html', context)
         if 'video_id' in request.POST:
-            return JsonResponse({'ok': 'super'})
+            return JsonResponse({'URA': 'gospodi'})
     elif request.method == 'GET':
         return render(request, 'main/index.html')
+
+    if request.method == 'POST':
+        print(request.POST.get('video_id'))
+        return JsonResponse({'ok': 'super'})
 
 
 def liked(request):
