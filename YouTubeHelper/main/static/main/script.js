@@ -28,3 +28,21 @@ $('.set-like-form').submit(function(e) {
         }
     });
 });
+
+
+// async function formSubmitHandler() {
+//     const response = await fetch('/liked', {
+//         method: 'POST',
+//         body: {
+//             id: 2
+//         }
+//     });
+
+//     const responseData = await response.text();
+
+//     if (response.ok) {
+//         console.log(responseData);
+//     } else {
+//         console.log('Error in response');
+//     }
+// };

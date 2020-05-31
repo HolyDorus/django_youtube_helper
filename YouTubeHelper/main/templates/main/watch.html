@@ -1,0 +1,28 @@
+{% extends 'main/layouts/basic.html' %}
+
+{% block title %}Просмотр видео{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="container">
+            {% if error %}
+                <br>
+                <h1 style="color: red;">{{ error }}</h1>
+            {% endif %}
+            {% if video %}
+                <br>    
+                <iframe width="1200" height="620" src="https://www.youtube.com/embed/{{ video.video_id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <br><br>
+                Название: {{ video.title }}<br>
+                Канал: {{ video.channel_title }}  (id: {{ video.channel_id }})<br>
+                Описание: {{ video.description }}<br>
+                Опубликовано: {{ video.published_at }}<br>
+                Длительность: {{ video.duration }}<br>
+                Просмотры: {{ video.view_count }}<br>
+                Лайки: {{ video.like_count }}<br>
+                Дизлайки: {{ video.dislike_count }}<br>
+                Комментарии: {{ video.comment_count }}<br>
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}

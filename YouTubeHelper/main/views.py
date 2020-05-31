@@ -1,10 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from django.shortcuts import redirect
 
+from . import models
 from .youtubeapi import YouTubeAPI
 from project import settings
-from . import models
 
 
 def index(request):
@@ -16,9 +15,7 @@ def index(request):
             found_videos = yt.find_videos(search_keyword, maxResults=10)
 
             context = {
-                'r': 0,
-                'g': 0,
-                'b': 0,
+                'search_keyword': search_keyword,
                 'found_videos': found_videos
             }
 
@@ -57,3 +54,22 @@ def liked(request):
             context['liked_videos'] = found_videos
 
         return render(request, 'main/liked.html', context)
+
+
+def watch(request):
+    if request.method == 'GET':
+        context = {}
+
+        if 'v' in request.GET:
+            video_id = request.GET['v']
+
+            yt = YouTubeAPI(settings.YOUTUBE_API_KEY)
+            found_video = yt.get_details_about_videos((video_id,))
+            if found_video:
+                context['video'] = found_video[0]
+            else:
+                context['error'] = 'Такое видео не найдено!'
+        else:
+            context['error'] = 'Не указан идентификатор видео!'
+
+        return render(request, 'main/watch.html', context)

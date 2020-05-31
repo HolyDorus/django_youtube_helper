@@ -7,4 +7,5 @@ app_name = 'main'
 urlpatterns = [
     path('', views.index, name='index'),
     path('liked/', views.liked, name='liked'),
+    path('watch/', views.watch, name='watch'),
 ]

@@ -6,35 +6,35 @@
     <main>
         <div class="container">
             {% for video in liked_videos %}
-            <a class="video-link" href="https://www.youtube.com/watch?v={{ video.video_id }}">
-                <div class="video">
-                    <div class="video-preview">
-                        <img src="{{ video.preview_url }}" alt="Video preview">
-                    </div>
-                    <div class="video-info">
-                        <div class="video-main-info">
-                            <div class="video-meta">
-                                <div class="video-title">
-                                    {{ video.title }}
+                <a class="video-link" href="https://www.youtube.com/watch?v={{ video.video_id }}">
+                    <div class="video">
+                        <div class="video-preview">
+                            <img src="{{ video.preview_url }}" alt="Video preview">
+                        </div>
+                        <div class="video-info">
+                            <div class="video-main-info">
+                                <div class="video-meta">
+                                    <div class="video-title">
+                                        {{ video.title }}
+                                    </div>
+                                    <div class="video-channel">
+                                        {{ video.channel_title }}
+                                    </div>
                                 </div>
-                                <div class="video-channel">
-                                    {{ video.channel_title }}
+                                <div class="video-like">
+                                    <form class="set-like-form">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="video_id" value="{{ video.video_id }}">
+                                        <input type="submit" class="set-like" value="+"></input>
+                                    </form>
                                 </div>
                             </div>
-                            <div class="video-like">
-                                <form class="set-like-form">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="video_id" value="{{ video.video_id }}">
-                                    <input type="submit" class="set-like" value="+"></input>
-                                </form>
+                            <div class="video-description">
+                                {{ video.short_description }}
                             </div>
                         </div>
-                        <div class="video-description">
-                            {{ video.short_description }}
-                        </div>
-                    </div>
-                </div> 
-            </a>
+                    </div> 
+                </a>
             {% endfor %}
         </div>
     </main>
