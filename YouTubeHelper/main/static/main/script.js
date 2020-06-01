@@ -3,7 +3,7 @@ async function myFormSubmitHandler(event) {
     form = event.target;
     form_fields = form.children;
 
-    const response = await fetch('/', {
+    const response = await fetch('liked/', {
         method: 'POST',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -16,21 +16,27 @@ async function myFormSubmitHandler(event) {
         })
     });
 
-    const responseData = await response.text();
+    const responseData = await response.json();
 
     if (response.ok) {
-        if (form.parentElement.classList.contains('like-active')) {
-            form.parentElement.classList.remove('like-active');
-            form_fields[2].value ='+';
+        if (responseData.error) {
+            console.log('Error: ' + responseData.error); 
         }
-        else {
-            form.parentElement.classList.add('like-active');
-            form_fields[2].value ='-';
+
+        if (responseData.video_status == 'added') {
+            if (!form.parentElement.classList.contains('like-active')) {
+                form.parentElement.classList.add('like-active');
+                form_fields[2].value ='-';
+            }
+        } else if (responseData.video_status == 'removed') {
+            if (form.parentElement.classList.contains('like-active')) {
+                form.parentElement.classList.remove('like-active');
+                form_fields[2].value ='+';
+            }
         }
 
         form_fields[2].blur();
-        console.log(responseData);
     } else {
-        console.log('Error!SAD!'); 
+        console.log(`Error (${response.status}): ${response.statusText}`);  
     }
 };

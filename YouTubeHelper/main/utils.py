@@ -1,4 +1,5 @@
 import requests
+from project import settings
 
 
 class YouTubeAPI:
@@ -86,3 +87,25 @@ class YouTubeAPI:
             details_about_videos.append(video_details)
 
         return details_about_videos
+
+
+class VideoManager:
+    yt = YouTubeAPI(settings.YOUTUBE_API_KEY)
+
+    def __init__(self, video_id):
+        self.video_id = video_id
+
+    def get_video_details(self):
+        data = {}
+
+        if self.video_id:
+            found_video = self.yt.get_details_about_videos((self.video_id,))
+
+            if found_video:
+                data['video'] = found_video[0]
+            else:
+                data['error'] = 'Такое видео не найдено!'
+        else:
+            data['error'] = 'Не указан идентификатор видео!'
+
+        return data

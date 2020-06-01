@@ -5,7 +5,7 @@ from . import views
 app_name = 'main'
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('liked/', views.liked, name='liked'),
-    path('watch/', views.watch, name='watch'),
+    path('', views.IndexView.as_view(), name='index'),
+    path('liked/', views.LikedView.as_view(), name='liked'),
+    path('watch/', views.WatchView.as_view(), name='watch'),
 ]

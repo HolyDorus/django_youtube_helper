@@ -1,18 +1,24 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.views import View
 
 from . import models
-from .youtubeapi import YouTubeAPI
+from . import utils
 from project import settings
 import json
 
 
-def index(request):
-    if request.method == 'POST':
-        if 'search_keyword' in request.POST:
-            search_keyword = request.POST['search_keyword']
+class IndexView(View):
+    http_method_names = ['get', 'post']
 
-            yt = YouTubeAPI(settings.YOUTUBE_API_KEY)
+    def get(self, request, *args, **kwargs):
+        return render(request, 'main/index.html')
+
+    def post(self, request, *args, **kwargs):
+        search_keyword = request.POST.get('search_keyword')
+
+        if search_keyword:
+            yt = utils.YouTubeAPI(settings.YOUTUBE_API_KEY)
             found_videos = yt.find_videos(search_keyword, maxResults=10)
 
             context = {
@@ -29,20 +35,17 @@ def index(request):
                 new_search_query.save()
 
             return render(request, 'main/index.html', context)
-
-        response = json.loads(request.body.decode())
-        if 'video_id' in response:
-            print("YES")
-            return JsonResponse({'URA': 'gospodi'})
-    elif request.method == 'GET':
-        return render(request, 'main/index.html')
+        else:
+            return redirect('main:index')
 
 
-def liked(request):
-    if request.method == 'GET':
+class LikedView(View):
+    http_method_names = ['get', 'post']
+
+    def get(self, request, *args, **kwargs):
         current_user = request.user
 
-        if not current_user.is_authenticated:
+        if not current_user or not current_user.is_authenticated:
             return redirect('main:index')
 
         liked_videos_ids = []
@@ -53,27 +56,42 @@ def liked(request):
         context = {}
 
         if liked_videos_ids:
-            yt = YouTubeAPI(settings.YOUTUBE_API_KEY)
+            yt = utils.YouTubeAPI(settings.YOUTUBE_API_KEY)
             found_videos = yt.get_details_about_videos(liked_videos_ids)
             context['liked_videos'] = found_videos
 
         return render(request, 'main/liked.html', context)
 
+    def post(self, request, *args, **kwargs):
+        response = json.loads(request.body.decode())
+        video_id = response.get('video_id')
 
-def watch(request):
-    if request.method == 'GET':
-        context = {}
+        if video_id:
+            current_user = request.user
 
-        if 'v' in request.GET:
-            video_id = request.GET['v']
+            if not current_user or not current_user.is_authenticated:
+                return JsonResponse({'error': 'user is not authenticated'})
 
-            yt = YouTubeAPI(settings.YOUTUBE_API_KEY)
-            found_video = yt.get_details_about_videos((video_id,))
-            if found_video:
-                context['video'] = found_video[0]
+            video = current_user.liked_videos.filter(video_id=video_id)
+
+            if video.exists():
+                video[0].delete()
+                return JsonResponse({'video_status': 'removed'})
             else:
-                context['error'] = 'Такое видео не найдено!'
-        else:
-            context['error'] = 'Не указан идентификатор видео!'
+                new_video = models.LikedVideos(
+                    user=current_user,
+                    video_id=video_id
+                )
+                new_video.save()
+                return JsonResponse({'video_status': 'added'})
+
+
+class WatchView(View):
+    http_method_names = ['get']
+
+    def get(self, request, *args, **kwargs):
+        video_id = request.GET.get('v')
+
+        context = utils.VideoManager(video_id).get_video_details()
 
         return render(request, 'main/watch.html', context)
