@@ -80,17 +80,21 @@ class YouTubeAPI:
                 'duration': video['contentDetails']['duration']
             }
 
-            if 'likeCount' in video['statistics']:
-                video_details['like_count'] = video['statistics']['likeCount']
+            likes = video['statistics'].get('likeCount')
+            if likes is not None:
+                video_details['like_count'] = likes
 
-            if 'dislikeCount' in video['statistics']:
-                video_details['dislike_count'] = video['statistics']['dislikeCount']
+            dislikes = video['statistics'].get('dislikeCount')
+            if dislikes is not None:
+                video_details['dislike_count'] = dislikes
 
-            if 'commentCount' in video['statistics']:
-                video_details['comment_count'] = video['statistics']['commentCount']
+            views = video['statistics'].get('viewCount')
+            if views is not None:
+                video_details['view_count'] = views
 
-            if 'viewCount' in video['statistics']:
-                video_details['view_count'] = video['statistics']['viewCount']
+            comments = video['statistics'].get('commentCount')
+            if comments is not None:
+                video_details['comment_count'] = comments
 
             details_about_videos.append(video_details)
 

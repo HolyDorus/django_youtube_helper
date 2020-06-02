@@ -21,18 +21,28 @@ class IndexView(View):
             yt = utils.YouTubeAPI(settings.YOUTUBE_API_KEY)
             found_videos = yt.find_videos(search_keyword, maxResults=10)
 
-            context = {
-                'search_keyword': search_keyword,
-                'found_videos': found_videos
-            }
-
             current_user = request.user
-            if current_user.is_authenticated:
+            if current_user and current_user.is_authenticated:
                 new_search_query = models.SearchStory(
                     user=current_user,
                     search_query=search_keyword
                 )
                 new_search_query.save()
+
+                for video in found_videos:
+                    tmp = current_user.liked_videos.filter(
+                        video_id=video['video_id']
+                    )
+
+                    if tmp.exists():
+                        video['liked_by_user'] = 'yes'
+                    else:
+                        video['liked_by_user'] = 'no'
+
+            context = {
+                'search_keyword': search_keyword,
+                'found_videos': found_videos
+            }
 
             return render(request, 'main/index.html', context)
         else:

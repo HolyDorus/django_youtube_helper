@@ -30,13 +30,23 @@
                                         {{ video.channel_title }}
                                     </div>
                                 </div>
-                                <div class="video-like">
-                                    <form class="set-like-form" onsubmit="myFormSubmitHandler(event);">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="video_id" value="{{ video.video_id }}">
-                                        <input type="submit" class="set-like" value="+"></input>
-                                    </form>
-                                </div>
+                                {% if video.liked_by_user == 'yes' %}
+                                    <div class="video-like like-active">
+                                        <form class="set-like-form" onsubmit="indexSubmitHandler(event);">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="video_id" value="{{ video.video_id }}">
+                                            <input type="submit" class="set-like" value="-"></input>
+                                        </form>
+                                    </div>
+                                {% else %}
+                                    <div class="video-like">
+                                        <form class="set-like-form" onsubmit="indexSubmitHandler(event);">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="video_id" value="{{ video.video_id }}">
+                                            <input type="submit" class="set-like" value="+"></input>
+                                        </form>
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="video-description">
                                 {{ video.description }}
