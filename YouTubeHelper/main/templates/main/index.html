@@ -30,7 +30,7 @@
                                         {{ video.channel_title }}
                                     </div>
                                 </div>
-                                {% if video.liked_by_user == 'yes' %}
+                                {% if video.liked_by_user %}
                                     <div class="video-like like-active">
                                         <form class="set-like-form" onsubmit="indexSubmitHandler(event);">
                                             {% csrf_token %}

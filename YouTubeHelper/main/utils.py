@@ -1,5 +1,6 @@
 import requests
 from project import settings
+from . import models
 
 
 class YouTubeAPI:
@@ -104,20 +105,57 @@ class YouTubeAPI:
 class VideoManager:
     yt = YouTubeAPI(settings.YOUTUBE_API_KEY)
 
-    def __init__(self, video_id):
-        self.video_id = video_id
-
-    def get_video_details(self):
+    def get_video_details(self, request):
+        video_id = request.GET.get('v')
         data = {}
 
-        if self.video_id:
-            found_video = self.yt.get_details_about_videos((self.video_id,))
-
-            if found_video:
-                data['video'] = found_video[0]
-            else:
-                data['error'] = 'Такое видео не найдено!'
-        else:
+        if not video_id:
             data['error'] = 'Не указан идентификатор видео!'
+            return data
+
+        found_video = self.yt.get_details_about_videos((video_id,))
+
+        if found_video:
+            data['video'] = found_video[0]
+        else:
+            data['error'] = 'Такое видео не найдено!'
 
         return data
+
+    def find_videos(self, request):
+        search_keyword = request.POST.get('search_keyword')
+        data = {}
+
+        if not search_keyword:
+            return data
+
+        found_videos = self.yt.find_videos(search_keyword)
+
+        if request.user.is_authenticated:
+            self.update_search_history(request.user, search_keyword)
+            self.update_liked_video_data(request.user, found_videos)
+
+        data = {
+            'search_keyword': search_keyword,
+            'found_videos': found_videos
+        }
+
+        return data
+
+    def update_search_history(self, user, search_keyword):
+        new_search_query = models.SearchStory(
+            user=user,
+            search_query=search_keyword
+        )
+        new_search_query.save()
+
+    def update_liked_video_data(self, user, found_videos):
+        for video in found_videos:
+            liked_video = user.liked_videos.filter(
+                video_id=video['video_id']
+            )
+
+            if liked_video.exists():
+                video['liked_by_user'] = True
+            else:
+                video['liked_by_user'] = False
