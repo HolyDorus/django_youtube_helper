@@ -36,6 +36,8 @@ async function myFormSubmitHandler(event) {
         }
 
         form_fields[2].blur();
+
+        // form.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
     } else {
         console.log(`Error (${response.status}): ${response.statusText}`);  
     }

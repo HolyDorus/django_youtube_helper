@@ -77,12 +77,20 @@ class YouTubeAPI:
                 'channel_id': video['snippet']['channelId'],
                 'published_at': video['snippet']['publishedAt'],
                 'preview_url': video['snippet']['thumbnails']['medium']['url'],
-                'duration': video['contentDetails']['duration'],
-                'view_count': video['statistics']['viewCount'],
-                'like_count': video['statistics']['likeCount'],
-                'dislike_count': video['statistics']['dislikeCount'],
-                'comment_count': video['statistics']['commentCount']
+                'duration': video['contentDetails']['duration']
             }
+
+            if 'likeCount' in video['statistics']:
+                video_details['like_count'] = video['statistics']['likeCount']
+
+            if 'dislikeCount' in video['statistics']:
+                video_details['dislike_count'] = video['statistics']['dislikeCount']
+
+            if 'commentCount' in video['statistics']:
+                video_details['comment_count'] = video['statistics']['commentCount']
+
+            if 'viewCount' in video['statistics']:
+                video_details['view_count'] = video['statistics']['viewCount']
 
             details_about_videos.append(video_details)
 
