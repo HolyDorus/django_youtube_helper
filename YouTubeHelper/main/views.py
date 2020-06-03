@@ -11,7 +11,7 @@ class LikedView(View):
     def get(self, request, *args, **kwargs):
         user = request.user
         if not user.is_authenticated:
-            return redirect('main:index')
+            return redirect('users:login')
 
         context = utils.VideoManager().get_user_liked_videos(user)
         return render(request, 'main/liked.html', context)
@@ -27,9 +27,13 @@ class IndexView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'main/index.html')
 
-    def post(self, request, *args, **kwargs):
+
+class ResultsView(View):
+    http_method_names = ['get', 'post']
+
+    def get(self, request, *args, **kwargs):
         context = utils.VideoManager().find_videos(request)
-        return render(request, 'main/index.html', context)
+        return render(request, 'main/results.html', context)
 
 
 class WatchView(View):

@@ -124,29 +124,29 @@ class VideoManager:
         return data
 
     def find_videos(self, request):
-        search_keyword = request.POST.get('search_keyword')
+        search_query = request.GET.get('search_query')
         data = {}
 
-        if not search_keyword:
+        if not search_query:
             return data
 
-        found_videos = self.yt.find_videos(search_keyword)
+        found_videos = self.yt.find_videos(search_query)
 
         if request.user.is_authenticated:
-            self.update_search_history(request.user, search_keyword)
+            self.update_search_history(request.user, search_query)
             self.update_liked_video_data(request.user, found_videos)
 
         data = {
-            'search_keyword': search_keyword,
+            'search_query': search_query,
             'found_videos': found_videos
         }
 
         return data
 
-    def update_search_history(self, user, search_keyword):
+    def update_search_history(self, user, search_query):
         new_search_query = models.SearchStory(
             user=user,
-            search_query=search_keyword
+            search_query=search_query
         )
         new_search_query.save()
 
@@ -185,6 +185,7 @@ class VideoManager:
 
             if not user.is_authenticated:
                 data = {'error': 'User is not authenticated!'}
+                return data
 
             video = user.liked_videos.filter(video_id=video_id)
 

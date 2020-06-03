@@ -1,4 +1,4 @@
-async function indexSubmitHandler(event) {
+async function resultsSubmitHandler(event) {
     event.preventDefault();
     form = event.target;
 
@@ -10,7 +10,7 @@ async function indexSubmitHandler(event) {
 
     form_fields = form.children;
 
-    const response = await fetch('liked/', {
+    const response = await fetch('../liked/', {
         method: 'POST',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -18,9 +18,9 @@ async function indexSubmitHandler(event) {
             'Accept': 'application/json',
             'X-CSRFToken': form_fields[0].value
         },
-        body: {
+        body: JSON.stringify({
             'video_id': form_fields[1].value
-        }
+        })
     });
 
     const responseData = await response.json();
@@ -59,7 +59,7 @@ async function likedSubmitHandler(event) {
     form = event.target;
     form_fields = form.children;
 
-    const response = await fetch('', {
+    const response = await fetch('../liked/', {
         method: 'POST',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -67,9 +67,9 @@ async function likedSubmitHandler(event) {
             'Accept': 'application/json',
             'X-CSRFToken': form_fields[0].value
         },
-        body: {
+        body: JSON.stringify({
             'video_id': form_fields[1].value
-        }
+        })
     });
 
     const responseData = await response.json();
