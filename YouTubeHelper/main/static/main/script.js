@@ -18,9 +18,9 @@ async function indexSubmitHandler(event) {
             'Accept': 'application/json',
             'X-CSRFToken': form_fields[0].value
         },
-        body: JSON.stringify({
+        body: {
             'video_id': form_fields[1].value
-        })
+        }
     });
 
     const responseData = await response.json();
@@ -67,9 +67,9 @@ async function likedSubmitHandler(event) {
             'Accept': 'application/json',
             'X-CSRFToken': form_fields[0].value
         },
-        body: JSON.stringify({
+        body: {
             'video_id': form_fields[1].value
-        })
+        }
     });
 
     const responseData = await response.json();

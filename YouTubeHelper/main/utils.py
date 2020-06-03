@@ -1,6 +1,7 @@
 import requests
 from project import settings
 from . import models
+import json
 
 
 class YouTubeAPI:
@@ -159,3 +160,45 @@ class VideoManager:
                 video['liked_by_user'] = True
             else:
                 video['liked_by_user'] = False
+
+    def get_user_liked_videos(self, user):
+        liked_videos_ids = []
+
+        for video in user.liked_videos.all():
+            liked_videos_ids.append(video.video_id)
+
+        data = {}
+
+        if liked_videos_ids:
+            found_videos = self.yt.get_details_about_videos(liked_videos_ids)
+            data['liked_videos'] = found_videos
+
+        return data
+
+    def get_action_by_like_or_dislike(self, request):
+        response_data = json.loads(request.body.decode())
+        video_id = response_data.get('video_id')
+        data = {}
+
+        if video_id:
+            user = request.user
+
+            if not user.is_authenticated:
+                data = {'error': 'User is not authenticated!'}
+
+            video = user.liked_videos.filter(video_id=video_id)
+
+            if video.exists():
+                video[0].delete()
+                data = {'video_status': 'removed'}
+            else:
+                new_video = models.LikedVideos(
+                    user=user,
+                    video_id=video_id
+                )
+                new_video.save()
+                data = {'video_status': 'added'}
+        else:
+            data = {'error': '\'video_id\' not found!'}
+
+        return data
