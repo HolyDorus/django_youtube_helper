@@ -5,16 +5,13 @@
 {% block content %}
     <main>
         <div class="container">
-            {% if errors %}
-                <h1>Errors:</h1><br>
-                {% for error in errors %}
-                    <h2>{{ error }}</h2>
-                {% endfor %}
-            {% endif %}
-            
             <form method="POST">
                 {% csrf_token %}
-                {{ form }}
+                {% for field in form %}
+                    {{ field.label_tag }} {{ field }}
+                    <br>
+                    {{field.errors}}
+                {% endfor %}
                 <input type="submit" value="Зарегистрироваться">
             </form>
         </div>
