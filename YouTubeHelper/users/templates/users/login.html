@@ -1,0 +1,20 @@
+{% extends 'main/layouts/base.html' %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="container">
+            {% if error %}
+                <h1>Errors:</h1><br>
+                {{ error }}
+            {% endif %}
+            
+            <form method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Войти">
+            </form>
+        </div>
+    </main>
+{% endblock %}

@@ -24,14 +24,14 @@
                     </li>
                     {% if user.is_authenticated %}
                         <li>
-                            <a href="">Выйти</a>
+                            <a href="{% url 'users:logout' %}">Выйти</a>
                         </li>
                     {% else %}
                         <li>
-                            <a href="">Зарегистрироваться</a>
+                            <a href="{% url 'users:register' %}">Зарегистрироваться</a>
                         </li>
                         <li>
-                            <a href="">Авторизироваться</a>
+                            <a href="{% url 'users:login' %}">Войти</a>
                         </li>
                     {% endif %}
                 </ul>

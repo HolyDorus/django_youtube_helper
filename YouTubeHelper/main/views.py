@@ -14,7 +14,7 @@ class LikedView(View):
     def get(self, request, *args, **kwargs):
         current_user = request.user
 
-        if not current_user or not current_user.is_authenticated:
+        if not current_user.is_authenticated:
             return redirect('main:index')
 
         liked_videos_ids = []

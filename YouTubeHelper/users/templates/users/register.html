@@ -1,0 +1,22 @@
+{% extends 'main/layouts/base.html' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="container">
+            {% if errors %}
+                <h1>Errors:</h1><br>
+                {% for error in errors %}
+                    <h2>{{ error }}</h2>
+                {% endfor %}
+            {% endif %}
+            
+            <form method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Зарегистрироваться">
+            </form>
+        </div>
+    </main>
+{% endblock %}
