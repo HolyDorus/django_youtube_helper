@@ -6,15 +6,30 @@
     <main>
         <div class="container">
             {% if error %}
-                <h1>Errors:</h1><br>
-                {{ error }}
+                <div class="block-status b-errors">
+                    <span>Ошибки:</span>
+                    <ul>
+                        <li>{{ error }}</li>
+                    </ul>
+                </div>
             {% endif %}
-            
-            <form method="POST">
-                {% csrf_token %}
-                {{ form }}
-                <input type="submit" value="Войти">
-            </form>
+            <div class="card">
+                <div class="card-title">Вход</div>
+                <div class="card-main">
+                    <form method="POST">
+                        <div class="card-form-container">
+                            <div class="card-form-fields">
+                                {% csrf_token %}
+                                {% for field in form %}
+                                    {{ field.label_tag }} {{ field }}
+                                {% endfor %}
+                            </div>
+                            <button type="submit" class="card-login-button">Войти</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="additionally">У вас еще нет аккаунта? <a href="{% url 'users:register' %}" class="card-link">Зарегистрируйтесь</a></div>
+            </div>
         </div>
     </main>
 {% endblock %}

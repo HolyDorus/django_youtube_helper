@@ -5,10 +5,12 @@ from django.contrib.auth.forms import UserCreationForm
 
 class LoginForm(forms.Form):
     username = forms.CharField(
+        label='Логин',
         required=True,
         max_length=150
     )
     password = forms.CharField(
+        label='Пароль',
         required=True,
         max_length=128,
         widget=forms.PasswordInput()
