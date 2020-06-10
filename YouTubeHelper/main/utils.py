@@ -184,7 +184,9 @@ class VideoManager:
             user = request.user
 
             if not user.is_authenticated:
-                data = {'error': 'User is not authenticated!'}
+                data = {
+                    'error': 'Для этого действия необходимо войти в аккаунт!'
+                }
                 return data
 
             video = user.liked_videos.filter(video_id=video_id)
@@ -200,6 +202,6 @@ class VideoManager:
                 new_video.save()
                 data = {'video_status': 'added'}
         else:
-            data = {'error': '\'video_id\' not found!'}
+            data = {'error': 'Видео \'video_id\' не найдено!'}
 
         return data

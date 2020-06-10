@@ -300,7 +300,7 @@ header {
 .card {
     margin: 100px auto 0 auto;
     background-color: rgb(243, 243, 243);
-    max-width: 330px;
+    max-width: 450px;
     border: 3px solid rgb(228, 228, 228);
     border-radius: 10px;
 }
@@ -315,10 +315,11 @@ header {
 
 .additionally {
     text-align: center;
-    padding: 20px 0;
+    padding-top: 30px;
+    padding-bottom: 20px;
 }
 
-.card-login-button {
+.card-button {
     display: block;
     background-color: rgb(112, 187, 1);
     width: 100%;
@@ -355,8 +356,9 @@ header {
     margin-bottom: 15px;
     margin-top: 7px;
     padding: 5px 10px;
+    outline: rgb(161, 161, 161) solid 1px;
 }
 
 .card-form-fields input:focus {
-    outline: rgb(112, 187, 1) solid 1px;
+    outline: rgb(112, 187, 1) solid 2px;
 }

@@ -21,7 +21,8 @@ async function resultsSubmitHandler(event) {
 
     if (response.ok) {
         if (responseData.error) {
-            console.log(`Error: ${responseData.error}`); 
+            alert(responseData.error);
+            return;
         }
 
         icon = form.children[2].children[0];
@@ -74,7 +75,8 @@ async function likedSubmitHandler(event) {
 
     if (response.ok) {
         if (responseData.error) {
-            console.log(`Error: ${responseData.error}`); 
+            alert(responseData.error);
+            return;
         }
 
         if (responseData.video_status == 'removed') {
