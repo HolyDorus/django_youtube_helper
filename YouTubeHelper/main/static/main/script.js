@@ -2,12 +2,6 @@ async function resultsSubmitHandler(event) {
     event.preventDefault();
     form = event.target;
 
-    if (form.parentElement.classList.contains('like-active')) {
-        if (!confirm("Вы точно хотите удалить это видео из списка 'Понравившиеся видео'?")) {
-            return;
-        }
-    }
-
     form_fields = form.children;
 
     const response = await fetch('../liked/', {
@@ -30,15 +24,19 @@ async function resultsSubmitHandler(event) {
             console.log(`Error: ${responseData.error}`); 
         }
 
+        icon = form.children[2].children[0];
+
         if (responseData.video_status == 'added') {
-            if (!form.parentElement.classList.contains('like-active')) {
-                form.parentElement.classList.add('like-active');
-                form_fields[2].value ='-';
+            if (icon.textContent == 'favorite_border'){
+                icon.classList.remove('like-icon');
+                icon.classList.add('dislike-icon');
+                icon.textContent = 'favorite';
             }
         } else if (responseData.video_status == 'removed') {
-            if (form.parentElement.classList.contains('like-active')) {
-                form.parentElement.classList.remove('like-active');
-                form_fields[2].value ='+';
+            if (icon.textContent == 'favorite'){
+                icon.classList.remove('dislike-icon');
+                icon.classList.add('like-icon');
+                icon.textContent = 'favorite_border';
             }
         }
 
@@ -80,11 +78,24 @@ async function likedSubmitHandler(event) {
         }
 
         if (responseData.video_status == 'removed') {
-            // main_container = document.querySelector('main .container');
-            // main_container.insertAdjacentHTML('afterbegin', `<h1>Видео \'${form_fields[1].value}\' удалено </h1>`);
+            block_success = document.querySelector('.block-status.b-success');
+            block_success.classList.remove('visually-hidden');
+
+            video_list = document.querySelector('.video-list');
+            video_list.style.paddingTop = 0;
+
+            video_title = form.parentElement.parentElement.children[0].children[0].textContent;
+
+            ul = block_success.children[1];
+            li = document.createElement('li');
+            li.appendChild(document.createTextNode(`Видео "${video_title}" было удалено.`));
+            ul.appendChild(li);
+
             form.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
         }
     } else {
         console.log(`Error (${response.status}): ${response.statusText}`);  
     }
 };
+
+

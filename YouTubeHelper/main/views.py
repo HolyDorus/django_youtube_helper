@@ -22,14 +22,14 @@ class LikedView(View):
 
 
 class IndexView(View):
-    http_method_names = ['get', 'post']
+    http_method_names = ['get']
 
     def get(self, request, *args, **kwargs):
         return render(request, 'main/index.html')
 
 
 class ResultsView(View):
-    http_method_names = ['get', 'post']
+    http_method_names = ['get']
 
     def get(self, request, *args, **kwargs):
         context = utils.VideoManager().find_videos(request)

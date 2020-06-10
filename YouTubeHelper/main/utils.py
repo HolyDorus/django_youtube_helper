@@ -124,7 +124,7 @@ class VideoManager:
         return data
 
     def find_videos(self, request):
-        search_query = request.GET.get('search_query')
+        search_query = request.GET.get('q')
         data = {}
 
         if not search_query:
@@ -137,7 +137,7 @@ class VideoManager:
             self.update_liked_video_data(request.user, found_videos)
 
         data = {
-            'search_query': search_query,
+            'q': search_query,
             'found_videos': found_videos
         }
 
