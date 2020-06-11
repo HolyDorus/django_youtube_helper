@@ -35,7 +35,7 @@ class YouTubeAPI:
                 'title': self._replace_special_expressions(
                     video['snippet']['title']
                 ),
-                'description': self._replace_special_expressions(
+                'short_description': self._replace_special_expressions(
                     video['snippet']['description']
                 ),
                 'channel_title': self._replace_special_expressions(
@@ -166,27 +166,58 @@ class VideoManager:
         if not search_query:
             return data
 
-        found_videos = self.yt.find_videos(search_query)
-
-        if request.user.is_authenticated:
-            self.update_search_history(request.user, search_query)
-            self.update_liked_video_data(request.user, found_videos)
+        videos = self._get_videos_from_cache(request.user, search_query)
 
         data = {
             'q': search_query,
-            'found_videos': found_videos
+            'videos': videos
         }
 
         return data
 
-    def update_search_history(self, user, search_query):
-        new_search_query = models.SearchStory(
-            user=user,
-            search_query=search_query
-        )
-        new_search_query.save()
+    def _get_videos_from_cache(self, user, search_query):
+        videos = []
+        query = models.SearchStory.objects.filter(query=search_query)
 
-    def update_liked_video_data(self, user, found_videos):
+        if query.exists():
+            found_cache = query.last().search_cache.all()
+
+            for cache in found_cache:
+                video_data = {
+                    'video_id': cache.video_id,
+                    'title': cache.video_title,
+                    'short_description': cache.video_short_description,
+                    'channel_title': cache.video_channel_title,
+                    'channel_id': cache.video_channel_id,
+                    'preview_url': cache.video_preview_url
+                }
+                videos.append(video_data)
+        else:
+            videos = self.yt.find_videos(search_query)
+            self._add_videos_to_cache(search_query, videos)
+
+        if user.is_authenticated:
+            self._update_liked_video_data(user, videos)
+
+        return videos
+
+    def _add_videos_to_cache(self, search_query, videos):
+        new_query_in_history = models.SearchStory(query=search_query)
+        new_query_in_history.save()
+
+        for video in videos:
+            new_seqrch_cache = models.SearchCache(
+                query=new_query_in_history,
+                video_id=video['video_id'],
+                video_title=video['title'],
+                video_short_description=video['short_description'],
+                video_channel_title=video['channel_title'],
+                video_channel_id=video['channel_id'],
+                video_preview_url=video['preview_url']
+            )
+            new_seqrch_cache.save()
+
+    def _update_liked_video_data(self, user, found_videos):
         for video in found_videos:
             liked_video = user.liked_videos.filter(
                 video_id=video['video_id']

@@ -15,7 +15,7 @@
             </div>
 
             <div class="video-list">
-            {% for video in found_videos %}
+            {% for video in videos %}
                 <a class="video-link" href="{% url 'main:watch' %}?v={{ video.video_id }}">
                     <div class="video">
                         <div class="video-preview">
@@ -42,7 +42,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="video-description">{{ video.description }}</div>
+                            <div class="video-description">{{ video.short_description }}</div>
                         </div>
                     </div> 
                 </a>

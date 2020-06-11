@@ -10,12 +10,24 @@ class AdminLikedVideos(admin.ModelAdmin):
 
 
 class AdminSearchStory(admin.ModelAdmin):
-    list_display = ('user', 'search_query', 'date_time')
-    list_display_links = ('search_query',)
-    search_fields = ('search_query',)
+    list_display = ('query', 'date_time')
+    list_display_links = ('query',)
+    search_fields = ('query',)
     ordering = ('-date_time',)
-    search_fields = ('search_query',)
+    search_fields = ('query',)
+
+
+class AdminSearchCache(admin.ModelAdmin):
+    list_display = (
+        'query', 'video_title',
+        'video_short_description', 'video_channel_title'
+    )
+    list_display_links = ('query',)
+    search_fields = ('query',)
+    ordering = ('query', 'video_title')
+    search_fields = ('query',)
 
 
 admin.site.register(models.LikedVideos, AdminLikedVideos)
 admin.site.register(models.SearchStory, AdminSearchStory)
+admin.site.register(models.SearchCache, AdminSearchCache)
