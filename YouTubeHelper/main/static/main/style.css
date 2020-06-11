@@ -272,7 +272,7 @@ header {
 
 /* Icons **********************************************/
 .search-icon {
-    color: rgb(77, 77, 77);
+    color: rgb(130, 130, 130);
     font-size: 30px !important;
     padding-top: 4px !important;
 }
@@ -329,8 +329,8 @@ header {
     color: white;
 }
 
-.card-login-button:hover {
-    background-color: rgb(123, 204, 1);
+.card-button:hover {
+    background-color: rgb(104, 173, 0);
 }
 
 .card-link {

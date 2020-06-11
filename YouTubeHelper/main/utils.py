@@ -32,9 +32,15 @@ class YouTubeAPI:
         for video in response.json()['items']:
             video_data = {
                 'video_id': video['id']['videoId'],
-                'title': video['snippet']['title'],
-                'description': video['snippet']['description'],
-                'channel_title': video['snippet']['channelTitle'],
+                'title': self._replace_special_expressions(
+                    video['snippet']['title']
+                ),
+                'description': self._replace_special_expressions(
+                    video['snippet']['description']
+                ),
+                'channel_title': self._replace_special_expressions(
+                    video['snippet']['channelTitle']
+                ),
                 'channel_id': video['snippet']['channelId'],
                 'preview_url': video['snippet']['thumbnails']['medium']['url']
             }
@@ -57,25 +63,27 @@ class YouTubeAPI:
         if not response.ok:
             return []
 
-        def get_short_description(description):
-            if len(description) <= 150:
-                return description
-
-            return ' '.join(description[:150].split()[:-1]) + '...'
-
         details_about_videos = []
 
         for video in response.json()['items']:
-            short_description = get_short_description(
-                video['snippet']['description']
+            short_description = self._get_short_description(
+                self._replace_special_expressions(
+                    video['snippet']['description']
+                )
             )
 
             video_details = {
                 'video_id': video['id'],
-                'title': video['snippet']['title'],
+                'title': self._replace_special_expressions(
+                    video['snippet']['title']
+                ),
                 'short_description': short_description,
-                'description': video['snippet']['description'],
-                'channel_title': video['snippet']['channelTitle'],
+                'description': self._replace_special_expressions(
+                    video['snippet']['description']
+                ),
+                'channel_title': self._replace_special_expressions(
+                    video['snippet']['channelTitle']
+                ),
                 'channel_id': video['snippet']['channelId'],
                 'published_at': video['snippet']['publishedAt'],
                 'preview_url': video['snippet']['thumbnails']['medium']['url'],
@@ -101,6 +109,34 @@ class YouTubeAPI:
             details_about_videos.append(video_details)
 
         return details_about_videos
+
+    def _get_short_description(self, description):
+        if len(description) <= 150:
+            return description
+
+        return ' '.join(description[:150].split()[:-1]) + '...'
+
+    def _replace_special_expressions(self, text):
+        expressions = {
+            '&quot;': '"',
+            '&nbsp;': ' ',
+            '&#39;': '\'',
+            '&gt;': '>',
+            '&lt': '<',
+            '&amp;': '&',
+            '&apos;': '\'',
+            '&cent;': '¢',
+            '&pound;': '£',
+            '&yen;': '¥',
+            '&euro;': '€',
+            '&copy;': '©',
+            '&reg;': '®'
+        }
+
+        for k, v in expressions.items():
+            text = text.replace(k, v)
+
+        return text
 
 
 class VideoManager:

@@ -127,3 +127,6 @@ STATIC_URL = '/static/'
 
 # New Auntification user model
 AUTH_USER_MODEL = 'users.CustomUser'
+
+# Allowed hosts
+ALLOWED_HOSTS = ['192.168.0.107']
