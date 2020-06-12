@@ -85,6 +85,10 @@ input, button {
     margin-bottom: 15px;
 }
 
+.video:hover {
+    color: black;
+}
+
 .video-preview {
     margin-right: 15px;
     height: 135px;
@@ -381,9 +385,66 @@ header {
 }
 
 .watch-info {
+    margin: 20px 0;
+}
+
+.w-main {
     display: flex;
     justify-content: space-between;
-    margin-top: 30px;
+}
+
+.w-main-info {
+    width: 100%;
+}
+
+.w-title {
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+
+.w-channel-publ {
+    display: flex;
+}
+
+.w-channel {
+    display: block;
+    font-size: 1.2rem;
+    color: rgb(56, 56, 56);
+    margin-right: 20px;
+}
+
+.w-channel:hover {
+    color: rgb(0, 0, 0);
+}
+
+.w-published {
+    font-size: 1.2rem;
+}
+
+.w-additional {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 20px;
+    background-color: rgb(36, 36, 36);;
+    color: white !important;
+    padding: 10px;
+}
+
+.w-additional > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+.w-additional span {
+    margin-left: 5px;
+}
+
+.w-description {
+    padding: 10px;
+    border: 4px solid rgb(36, 36, 36);
+    overflow-x: hidden;
 }
 
 /* 404 page **********************************************/
@@ -522,6 +583,16 @@ header {
         width: 100%;
         height: 300px;
     }
+
+    .w-additional {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 720px) and (min-width: 500px) {
+    .w-additional {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media (max-width: 660px) and (min-width: 500px) {
@@ -557,5 +628,9 @@ header {
     .video-preview img {
         width: 100%;
         height: 240px;
+    }
+
+    .w-channel-publ {
+        display: block;
     }
 }

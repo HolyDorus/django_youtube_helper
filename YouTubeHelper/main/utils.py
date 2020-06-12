@@ -2,6 +2,8 @@ import requests
 from project import settings
 from . import models
 import json
+from isodate import parse_duration, parse_datetime
+from django.utils import dateformat
 
 
 class YouTubeAPI:
@@ -85,9 +87,13 @@ class YouTubeAPI:
                     video['snippet']['channelTitle']
                 ),
                 'channel_id': video['snippet']['channelId'],
-                'published_at': video['snippet']['publishedAt'],
+                'published_at': self._get_pretty_published_date(
+                    video['snippet']['publishedAt']
+                ),
                 'preview_url': video['snippet']['thumbnails']['medium']['url'],
-                'duration': video['contentDetails']['duration']
+                'duration': self._get_pretty_duration(
+                    video['contentDetails']['duration']
+                )
             }
 
             likes = video['statistics'].get('likeCount')
@@ -109,6 +115,23 @@ class YouTubeAPI:
             details_about_videos.append(video_details)
 
         return details_about_videos
+
+    def _get_pretty_published_date(self, datetime_string):
+        dt = parse_datetime(datetime_string)
+        return dateformat.format(dt, 'd E Y г.')
+
+    def _get_pretty_duration(self, duration):
+        parsed = parse_duration(duration)
+        sec = parsed.seconds
+        time = str(parsed)
+
+        if sec / 60 / 60 < 1:
+            time = time[2:]
+
+            if sec / 60 < 10:
+                time = time[1:]
+
+        return time
 
     def _get_short_description(self, description):
         if len(description) <= 150:
@@ -272,14 +295,10 @@ class VideoManager:
                 video['video_id']
             )
 
-
-            # liked_video = user.liked_videos.filter(
-            #     video_id=video['video_id']
-            # )
-
-            # video['liked_by_user'] = liked_video.exists()
-
     def _is_video_liked_by_user(self, user, video_id):
+        if not user.is_authenticated:
+            return False
+
         video = user.liked_videos.filter(
             video_id=video_id
         )

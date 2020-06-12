@@ -18,36 +18,63 @@
             </div>
 
             <div class="watch-info">
-                <div class="watch-main-info">
-                    <div class="watch-title">{{ video.title }}</div>
-                    <div class="watch-channel">{{ video.channel_title }}</div>
+                <div class="w-main">
+                    <div class="w-main-info">
+                        <div class="w-title">{{ video.title }}</div>
+                        <div class="w-channel-publ">
+                            <a href="https://www.youtube.com/user/{{ video.channel_id }}" class="w-channel">{{ video.channel_title }}</a>
+                            <div class="w-published">({{ video.published_at }})</div>
+                        </div>
+                    </div>
+                    
+                    <div class="video-like">
+                        <form class="set-like-form" onsubmit="resultsSubmitHandler(event);">
+                            {% csrf_token %}
+                            <input type="hidden" name="video_id" value="{{ video.video_id }}">
+                            <button type="submit" class="set-like">
+                                {% if video.liked_by_user %}
+                                    <i class="material-icons dislike-icon">favorite</i>
+                                {% else %}
+                                    <i class="material-icons like-icon">favorite_border</i>
+                                {% endif %}
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                
-                <div class="video-like">
-                    <form class="set-like-form" onsubmit="resultsSubmitHandler(event);">
-                        {% csrf_token %}
-                        <input type="hidden" name="video_id" value="{{ video.video_id }}">
-                        <button type="submit" class="set-like">
-                            {% if video.liked_by_user %}
-                                <i class="material-icons dislike-icon">favorite</i>
-                            {% else %}
-                                <i class="material-icons like-icon">favorite_border</i>
-                            {% endif %}
-                        </button>
-                    </form>
-                </div>
-                
-            </div>
 
-            Название: {{ video.title }}<br>
-            Канал: {{ video.channel_title }}  (id: {{ video.channel_id }})<br>
-            Описание: {{ video.description }}<br>
-            Опубликовано: {{ video.published_at }}<br>
-            Длительность: {{ video.duration }}<br>
-            Просмотры: {{ video.view_count }}<br>
-            Лайки: {{ video.like_count }}<br>
-            Дизлайки: {{ video.dislike_count }}<br>
-            Комментарии: {{ video.comment_count }}<br>
+                <div class="w-additional">
+                    <div>
+                        <i class="material-icons access-time-icon">access_time</i>
+                        <span>{{ video.duration }}</span>
+                    </div>
+                    {% if video.view_count %}
+                        <div>
+                            <i class="material-icons view-count-icon">visibility</i>
+                            <span>{{ video.view_count }}</span>
+                        </div>
+                    {% endif %}
+                    {% if video.like_count %}
+                        <div>
+                            <i class="material-icons thumb-up-icon">thumb_up</i>
+                            <span>{{ video.like_count }}</span>
+                        </div>
+                    {% endif %}
+                    {% if video.dislike_count %}
+                        <div>
+                            <i class="material-icons thumb-down-icon">thumb_down</i>
+                            <span>{{ video.dislike_count }}</span>
+                        </div>
+                    {% endif %}
+                    {% if video.comment_count %}
+                        <div>
+                            <i class="material-icons comment-icon">comment</i>
+                            <span>{{ video.comment_count }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="w-description">{{ video.description }}</div>
+            </div>
         {% endif %}
     </div>
 {% endblock %}
