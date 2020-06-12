@@ -1,0 +1,18 @@
+{% extends 'main/layouts/base.html' %}
+
+{% block title %}Страница не найдена{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div id="notfound">
+            <div class="notfound">
+                <div class="notfound-404">
+                    <h1>4<span></span>4</h1>
+                </div>
+                <h2>Упс! Страница не найдена</h2>
+                <p>Неправильно набран адрес, или такой страницы на сайте больше не существует</p>
+                <a href="{% url 'main:index' %}">Вернуться на главную</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

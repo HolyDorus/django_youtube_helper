@@ -3,33 +3,31 @@
 {% block title %}Вход{% endblock %}
 
 {% block content %}
-    <main>
-        <div class="container">
-            {% if error %}
-                <div class="block-status b-errors">
-                    <span>Ошибки:</span>
-                    <ul>
-                        <li>{{ error }}</li>
-                    </ul>
-                </div>
-            {% endif %}
-            <div class="card">
-                <div class="card-title">Вход</div>
-                <div class="card-main">
-                    <form method="POST">
-                        <div class="card-form-container">
-                            <div class="card-form-fields">
-                                {% csrf_token %}
-                                {% for field in form %}
-                                    {{ field.label_tag }} {{ field }}
-                                {% endfor %}
-                            </div>
-                            <button type="submit" class="card-button">Войти</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="additionally">У вас еще нет аккаунта? <a href="{% url 'users:register' %}" class="card-link">Зарегистрироваться</a></div>
+    <div class="container">
+        {% if error %}
+            <div class="block-status b-errors">
+                <span>Ошибки:</span>
+                <ul>
+                    <li>{{ error }}</li>
+                </ul>
             </div>
+        {% endif %}
+        <div class="card">
+            <div class="card-title">Вход</div>
+            <div class="card-main">
+                <form method="POST">
+                    <div class="card-form-container">
+                        <div class="card-form-fields">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                {{ field.label_tag }} {{ field }}
+                            {% endfor %}
+                        </div>
+                        <button type="submit" class="card-button">Войти</button>
+                    </div>
+                </form>
+            </div>
+            <div class="additionally">У вас еще нет аккаунта? <a href="{% url 'users:register' %}" class="card-link">Зарегистрироваться</a></div>
         </div>
-    </main>
+    </div>
 {% endblock %}

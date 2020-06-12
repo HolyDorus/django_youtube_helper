@@ -3,51 +3,49 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-    <main>
-        <div class="container">
-            <div class="search-line sl-results">
-                <form method="GET">
-                    <input type="text" name="q" class="search-text m-search" value="{{ q }}" placeholder="Введите запрос">
-                    <button type="submit" class="seacrh-submit">
-                        <i class="material-icons search-icon">search</i>
-                    </button>
-                </form>
-            </div>
-
-            <div class="video-list">
-            {% for video in videos %}
-                <a class="video-link" href="{% url 'main:watch' %}?v={{ video.video_id }}">
-                    <div class="video">
-                        <div class="video-preview">
-                            <img src="{{ video.preview_url }}" alt="Video preview">
-                        </div>
-                        <div class="video-info">
-                            <div class="video-main-info">
-                                <div class="video-meta">
-                                    <div class="video-title">{{ video.title }}</div>
-                                    <div class="video-channel">{{ video.channel_title }}</div>
-                                </div>
-
-                                <div class="video-like">
-                                    <form class="set-like-form" onsubmit="resultsSubmitHandler(event);">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="video_id" value="{{ video.video_id }}">
-                                        <button type="submit" class="set-like">
-                                            {% if video.liked_by_user %}
-                                                <i class="material-icons dislike-icon">favorite</i>
-                                            {% else %}
-                                                <i class="material-icons like-icon">favorite_border</i>
-                                            {% endif %}
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="video-description">{{ video.short_description }}</div>
-                        </div>
-                    </div> 
-                </a>
-            {% endfor %}
-            </div>
+    <div class="container">
+        <div class="search-line sl-results">
+            <form method="GET">
+                <input type="text" name="q" class="search-text m-search" value="{{ q }}" placeholder="Введите запрос">
+                <button type="submit" class="seacrh-submit">
+                    <i class="material-icons search-icon">search</i>
+                </button>
+            </form>
         </div>
-    </main>
+
+        <div class="video-list">
+        {% for video in videos %}
+            <a class="video-link" href="{% url 'main:watch' %}?v={{ video.video_id }}">
+                <div class="video">
+                    <div class="video-preview">
+                        <img src="{{ video.preview_url }}" alt="Video preview">
+                    </div>
+                    <div class="video-info">
+                        <div class="video-main-info">
+                            <div class="video-meta">
+                                <div class="video-title">{{ video.title }}</div>
+                                <div class="video-channel">{{ video.channel_title }}</div>
+                            </div>
+
+                            <div class="video-like">
+                                <form class="set-like-form" onsubmit="resultsSubmitHandler(event);">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="video_id" value="{{ video.video_id }}">
+                                    <button type="submit" class="set-like">
+                                        {% if video.liked_by_user %}
+                                            <i class="material-icons dislike-icon">favorite</i>
+                                        {% else %}
+                                            <i class="material-icons like-icon">favorite_border</i>
+                                        {% endif %}
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="video-description">{{ video.short_description }}</div>
+                    </div>
+                </div> 
+            </a>
+        {% endfor %}
+        </div>
+    </div>
 {% endblock %}

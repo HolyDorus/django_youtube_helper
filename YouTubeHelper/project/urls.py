@@ -22,3 +22,5 @@ urlpatterns = [
     path('users/', include('users.urls'), name='users'),
     path('', include('main.urls'), name='main'),
 ]
+
+handler404 = 'main.views.error_404'

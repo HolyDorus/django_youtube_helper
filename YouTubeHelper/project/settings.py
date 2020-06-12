@@ -25,7 +25,7 @@ SECRET_KEY = 'n(u&j0$at#7nyo(6w+-$vtljs)2ktac@8$$yb$(wppz#+bq#)n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -130,6 +130,3 @@ YOUTUBE_API_KEY = 'AIzaSyA3aU4WPGe6uVCJGoDKIEWQlss4S7jNZI8'
 
 # Use cache system for search results
 SEARCH_RESULTS_CACHE = False
-
-# Allowed hosts
-ALLOWED_HOSTS = ['192.168.0.107']

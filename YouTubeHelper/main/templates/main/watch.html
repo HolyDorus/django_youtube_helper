@@ -3,31 +3,51 @@
 {% block title %}Просмотр видео{% endblock %}
 
 {% block content %}
-    <main>
-        <div class="container">
-            {% if error %}
-                <div class="block-status b-errors">
-                    <span>Ошибки:</span>
-                    <ul>
-                        <li>{{ error }}</li>
-                    </ul>
-                </div>
-            {% endif %}
-            {% if video %}
-                <div class="youtube-video-player">
-                    <iframe width="1200" height="620" src="https://www.youtube.com/embed/{{ video.video_id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
+    <div class="container">
+        {% if error %}
+            <div class="block-status b-errors">
+                <span>Ошибки:</span>
+                <ul>
+                    <li>{{ error }}</li>
+                </ul>
+            </div>
+        {% endif %}
+        {% if video %}
+            <div class="youtube-video-player">
+                <iframe width="1200" height="620" src="https://www.youtube.com/embed/{{ video.video_id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
 
-                Название: {{ video.title }}<br>
-                Канал: {{ video.channel_title }}  (id: {{ video.channel_id }})<br>
-                Описание: {{ video.description }}<br>
-                Опубликовано: {{ video.published_at }}<br>
-                Длительность: {{ video.duration }}<br>
-                Просмотры: {{ video.view_count }}<br>
-                Лайки: {{ video.like_count }}<br>
-                Дизлайки: {{ video.dislike_count }}<br>
-                Комментарии: {{ video.comment_count }}<br>
-            {% endif %}
-        </div>
-    </main>
+            <div class="watch-info">
+                <div class="watch-main-info">
+                    <div class="watch-title">{{ video.title }}</div>
+                    <div class="watch-channel">{{ video.channel_title }}</div>
+                </div>
+                
+                <div class="video-like">
+                    <form class="set-like-form" onsubmit="resultsSubmitHandler(event);">
+                        {% csrf_token %}
+                        <input type="hidden" name="video_id" value="{{ video.video_id }}">
+                        <button type="submit" class="set-like">
+                            {% if video.liked_by_user %}
+                                <i class="material-icons dislike-icon">favorite</i>
+                            {% else %}
+                                <i class="material-icons like-icon">favorite_border</i>
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+                
+            </div>
+
+            Название: {{ video.title }}<br>
+            Канал: {{ video.channel_title }}  (id: {{ video.channel_id }})<br>
+            Описание: {{ video.description }}<br>
+            Опубликовано: {{ video.published_at }}<br>
+            Длительность: {{ video.duration }}<br>
+            Просмотры: {{ video.view_count }}<br>
+            Лайки: {{ video.like_count }}<br>
+            Дизлайки: {{ video.dislike_count }}<br>
+            Комментарии: {{ video.comment_count }}<br>
+        {% endif %}
+    </div>
 {% endblock %}

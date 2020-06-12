@@ -113,7 +113,7 @@ input, button {
     padding-top: 5px;
 }
 
-.video-like {
+.video-like, .video-like form {
     height: 35px;
     width: 35px;
 }
@@ -380,6 +380,86 @@ header {
     height: 100%;
 }
 
+.watch-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+/* 404 page **********************************************/
+#notfound {
+    position: relative;
+    height: 80vh;
+}
+
+#notfound .notfound {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.notfound {
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.notfound .notfound-404 {
+    height: 190px;
+}
+
+.notfound .notfound-404 h1 {
+    font-size: 146px;
+    font-weight: 700;
+    margin: 0px;
+    color: #232323;
+}
+
+.notfound .notfound-404 h1>span {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    background-image: url("emoji.png");
+    background-size: cover;
+    -webkit-transform: scale(1.4);
+    -ms-transform: scale(1.4);
+    transform: scale(1.4);
+    z-index: -1;
+}
+
+.notfound h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+    text-transform: uppercase;
+    color: #232323;
+}
+
+.notfound p {
+    color: #787878;
+    font-weight: 300;
+    margin: 1rem 0;
+}
+
+.notfound a {
+    display: inline-block;
+    padding: 12px 30px;
+    font-weight: 700;
+    background-color: #f99827;
+    color: #fff;
+    text-decoration: none;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all;
+}
+
+.notfound a:hover {
+    opacity: 0.8;
+}
+
 
 /* Media **********************************************/
 @media (max-width: 660px) {
@@ -404,6 +484,10 @@ header {
     .sl-results {
         padding-bottom: 10px;
     }
+
+    .youtube-video-player {
+        margin-top: 10px;
+    }
 }
 
 @media (max-width: 500px) {
@@ -412,12 +496,12 @@ header {
     }
 
     .logo, .logo img {
-        height: 50px;
-        width: 120px;
+        height: 40px;
+        width: 96px;
     }
 
     #fake-header-area {
-        height: 60px;
+        height: 50px;
     }
 
     .search-logo a, .search-logo svg {

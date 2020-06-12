@@ -5,21 +5,6 @@ from django.views import View
 from . import utils
 
 
-class LikedView(View):
-    http_method_names = ['get', 'post']
-
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('users:login')
-
-        context = utils.VideoManager().get_user_liked_videos(request.user)
-        return render(request, 'main/liked.html', context)
-
-    def post(self, request, *args, **kwargs):
-        context = utils.VideoManager().get_action_by_like_or_dislike(request)
-        return JsonResponse(context)
-
-
 class IndexView(View):
     http_method_names = ['get']
 
@@ -41,3 +26,22 @@ class WatchView(View):
     def get(self, request, *args, **kwargs):
         context = utils.VideoManager().get_video_details(request)
         return render(request, 'main/watch.html', context)
+
+
+class LikedView(View):
+    http_method_names = ['get', 'post']
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('users:login')
+
+        context = utils.VideoManager().get_user_liked_videos(request.user)
+        return render(request, 'main/liked.html', context)
+
+    def post(self, request, *args, **kwargs):
+        context = utils.VideoManager().get_action_by_like_or_dislike(request)
+        return JsonResponse(context)
+
+
+def error_404(request, exception):
+    return render(request, 'main/404.html')
