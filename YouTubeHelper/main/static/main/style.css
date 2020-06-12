@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -80,7 +81,7 @@ input, button {
 
 .video {
     display: flex;
-    color: black;
+    color: rgb(56, 56, 56);
     margin-bottom: 15px;
 }
 
@@ -361,4 +362,116 @@ header {
 
 .card-form-fields input:focus {
     outline: rgb(112, 187, 1) solid 2px;
+}
+
+
+/* Video details page **********************************************/
+.youtube-video-player {
+    margin-top: 30px;
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; 
+}
+
+.youtube-video-player iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Media **********************************************/
+@media (max-width: 660px) {
+    .video-list {
+        padding-top: 10px;
+    }
+
+    .video {
+        display: block;
+        margin-bottom: 40px;
+    }
+
+    .video-description {
+        color: rgb(92, 92, 92);
+    }
+
+    .video-title {
+        font-size: 1.4rem;
+        font-weight: 500;
+    }
+
+    .sl-results {
+        padding-bottom: 10px;
+    }
+}
+
+@media (max-width: 500px) {
+    .search-box {
+        padding-top: 30px;
+    }
+
+    .logo, .logo img {
+        height: 50px;
+        width: 120px;
+    }
+
+    #fake-header-area {
+        height: 60px;
+    }
+
+    .search-logo a, .search-logo svg {
+        width: 184px;
+        height: 96px;
+    }
+
+    .card {
+        margin-top: 20px;
+    }
+
+    .video-preview {
+        margin: 0 0 10px 0;
+        height: 300px;
+    }
+
+    .video-preview img {
+        width: 100%;
+        height: 300px;
+    }
+}
+
+@media (max-width: 660px) and (min-width: 500px) {
+    .video-preview {
+        margin: 0 0 10px 0;
+        height: 380px;
+    }
+
+    .video-preview img {
+        width: 100%;
+        height: 380px;
+    }
+}
+
+@media (max-width: 500px) and (min-width: 380px) {
+    .video-preview {
+        margin: 0 0 10px 0;
+        height: 300px;
+    }
+
+    .video-preview img {
+        width: 100%;
+        height: 300px;
+    }
+}
+
+@media (max-width: 380px) {
+    .video-preview {
+        margin: 0 0 10px 0;
+        height: 240px;
+    }
+
+    .video-preview img {
+        width: 100%;
+        height: 240px;
+    }
 }

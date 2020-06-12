@@ -144,29 +144,27 @@ class VideoManager:
 
     def get_video_details(self, request):
         video_id = request.GET.get('v')
-        data = {}
 
         if not video_id:
-            data['error'] = 'Не указан идентификатор видео!'
-            return data
+            return {'error': 'Не указан идентификатор видео!'}
 
         found_video = self.yt.get_details_about_videos((video_id,))
 
         if found_video:
-            data['video'] = found_video[0]
+            return {'video': found_video[0]}
         else:
-            data['error'] = 'Такое видео не найдено!'
-
-        return data
+            return {'error': 'Такое видео не найдено!'}
 
     def find_videos(self, request):
         search_query = request.GET.get('q')
-        data = {}
 
         if not search_query:
-            return data
+            return {}
 
-        videos = self._get_videos_from_cache(request.user, search_query)
+        if settings.SEARCH_RESULTS_CACHE:
+            videos = self._get_videos_from_cache(request.user, search_query)
+        else:
+            videos = self._get_videos(request.user, search_query)
 
         data = {
             'q': search_query,
@@ -174,6 +172,14 @@ class VideoManager:
         }
 
         return data
+
+    def _get_videos(self, user, search_query):
+        videos = self.yt.find_videos(search_query)
+
+        if user.is_authenticated:
+            self._update_liked_video_data(user, videos)
+
+        return videos
 
     def _get_videos_from_cache(self, user, search_query):
         videos = []
@@ -223,10 +229,7 @@ class VideoManager:
                 video_id=video['video_id']
             )
 
-            if liked_video.exists():
-                video['liked_by_user'] = True
-            else:
-                video['liked_by_user'] = False
+            video['liked_by_user'] = liked_video.exists()
 
     def get_user_liked_videos(self, user):
         liked_videos_ids = []
@@ -234,41 +237,33 @@ class VideoManager:
         for video in user.liked_videos.all():
             liked_videos_ids.append(video.video_id)
 
-        data = {}
-
         if liked_videos_ids:
             found_videos = self.yt.get_details_about_videos(liked_videos_ids)
-            data['liked_videos'] = found_videos
+            return {'liked_videos': found_videos}
 
-        return data
+        return {}
 
     def get_action_by_like_or_dislike(self, request):
         response_data = json.loads(request.body.decode())
         video_id = response_data.get('video_id')
-        data = {}
 
         if video_id:
             user = request.user
 
             if not user.is_authenticated:
-                data = {
-                    'error': 'Для этого действия необходимо войти в аккаунт!'
-                }
-                return data
+                return {'error': 'Необходимо войти в аккаунт!'}
 
             video = user.liked_videos.filter(video_id=video_id)
 
             if video.exists():
-                video[0].delete()
-                data = {'video_status': 'removed'}
+                video.last().delete()
+                return {'video_status': 'removed'}
             else:
                 new_video = models.LikedVideos(
                     user=user,
                     video_id=video_id
                 )
                 new_video.save()
-                data = {'video_status': 'added'}
+                return {'video_status': 'added'}
         else:
-            data = {'error': 'Видео \'video_id\' не найдено!'}
-
-        return data
+            return {'error': f'Видео \'{video_id}\' не найдено!'}

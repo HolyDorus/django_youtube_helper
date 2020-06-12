@@ -22,9 +22,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'n(u&j0$at#7nyo(6w+-$vtljs)2ktac@8$$yb$(wppz#+bq#)n'
 
-# YouTube Data API Key
-YOUTUBE_API_KEY = 'AIzaSyA3aU4WPGe6uVCJGoDKIEWQlss4S7jNZI8'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -127,6 +124,12 @@ STATIC_URL = '/static/'
 
 # New Auntification user model
 AUTH_USER_MODEL = 'users.CustomUser'
+
+# YouTube Data API Key
+YOUTUBE_API_KEY = 'AIzaSyA3aU4WPGe6uVCJGoDKIEWQlss4S7jNZI8'
+
+# Use cache system for search results
+SEARCH_RESULTS_CACHE = False
 
 # Allowed hosts
 ALLOWED_HOSTS = ['192.168.0.107']

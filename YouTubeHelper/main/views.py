@@ -9,11 +9,10 @@ class LikedView(View):
     http_method_names = ['get', 'post']
 
     def get(self, request, *args, **kwargs):
-        user = request.user
-        if not user.is_authenticated:
+        if not request.user.is_authenticated:
             return redirect('users:login')
 
-        context = utils.VideoManager().get_user_liked_videos(user)
+        context = utils.VideoManager().get_user_liked_videos(request.user)
         return render(request, 'main/liked.html', context)
 
     def post(self, request, *args, **kwargs):
