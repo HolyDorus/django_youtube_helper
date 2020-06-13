@@ -23,10 +23,10 @@
                                 <div class="video-channel">{{ video.channel_title }}</div>
                             </div>
                             <div class="video-like">
-                                <form class="set-like-form" onsubmit="likedSubmitHandler(event);">
+                                <form class="like-form" onsubmit="d_SubmitHandler(event);">
                                     {% csrf_token %}
                                     <input type="hidden" name="video_id" value="{{ video.video_id }}">
-                                    <button type="submit" class="set-like">
+                                    <button type="submit" class="like-button">
                                         <i class="material-icons dislike-icon">favorite</i>
                                     </button>
                                 </form>

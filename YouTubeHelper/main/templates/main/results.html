@@ -28,10 +28,10 @@
                             </div>
 
                             <div class="video-like">
-                                <form class="set-like-form" onsubmit="resultsSubmitHandler(event);">
+                                <form class="like-form" onsubmit="ld_SubmitHandler(event);">
                                     {% csrf_token %}
                                     <input type="hidden" name="video_id" value="{{ video.video_id }}">
-                                    <button type="submit" class="set-like">
+                                    <button type="submit" class="like-button">
                                         {% if video.liked_by_user %}
                                             <i class="material-icons dislike-icon">favorite</i>
                                         {% else %}

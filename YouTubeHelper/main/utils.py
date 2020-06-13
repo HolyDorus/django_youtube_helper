@@ -1,9 +1,12 @@
+import json
+
+from django.utils import dateformat
+
 import requests
+from isodate import parse_duration, parse_datetime
+
 from project import settings
 from . import models
-import json
-from isodate import parse_duration, parse_datetime
-from django.utils import dateformat
 
 
 class YouTubeAPI:

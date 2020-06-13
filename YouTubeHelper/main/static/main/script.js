@@ -1,4 +1,4 @@
-async function resultsSubmitHandler(event) {
+async function ld_SubmitHandler(event) {
     event.preventDefault();
     form = event.target;
 
@@ -48,7 +48,7 @@ async function resultsSubmitHandler(event) {
 };
 
 
-async function likedSubmitHandler(event) {
+async function d_SubmitHandler(event) {
     event.preventDefault();
     
     if (!confirm("Вы точно хотите удалить это видео из списка 'Понравившиеся видео'?")) {

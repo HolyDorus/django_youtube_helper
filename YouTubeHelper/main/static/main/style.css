@@ -122,7 +122,7 @@ input, button {
     width: 35px;
 }
 
-.set-like {
+.like-button {
     height: 35px;
     width: 35px;
     background-color: transparent;
@@ -586,6 +586,14 @@ header {
 
     .w-additional {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .navbar li a {
+        font-size: 0.8rem;
+    }
+
+    .navbar li:not(:first-child){
+        margin-left: 20px;
     }
 }
 

@@ -12,6 +12,7 @@
                 </ul>
             </div>
         {% endif %}
+
         {% if video %}
             <div class="youtube-video-player">
                 <iframe width="1200" height="620" src="https://www.youtube.com/embed/{{ video.video_id }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -28,10 +29,10 @@
                     </div>
                     
                     <div class="video-like">
-                        <form class="set-like-form" onsubmit="resultsSubmitHandler(event);">
+                        <form class="like-form" onsubmit="ld_SubmitHandler(event);">
                             {% csrf_token %}
                             <input type="hidden" name="video_id" value="{{ video.video_id }}">
-                            <button type="submit" class="set-like">
+                            <button type="submit" class="like-button">
                                 {% if video.liked_by_user %}
                                     <i class="material-icons dislike-icon">favorite</i>
                                 {% else %}
@@ -44,30 +45,30 @@
 
                 <div class="w-additional">
                     <div>
-                        <i class="material-icons access-time-icon">access_time</i>
+                        <i class="material-icons">access_time</i>
                         <span>{{ video.duration }}</span>
                     </div>
                     {% if video.view_count %}
                         <div>
-                            <i class="material-icons view-count-icon">visibility</i>
+                            <i class="material-icons">visibility</i>
                             <span>{{ video.view_count }}</span>
                         </div>
                     {% endif %}
                     {% if video.like_count %}
                         <div>
-                            <i class="material-icons thumb-up-icon">thumb_up</i>
+                            <i class="material-icons">thumb_up</i>
                             <span>{{ video.like_count }}</span>
                         </div>
                     {% endif %}
                     {% if video.dislike_count %}
                         <div>
-                            <i class="material-icons thumb-down-icon">thumb_down</i>
+                            <i class="material-icons">thumb_down</i>
                             <span>{{ video.dislike_count }}</span>
                         </div>
                     {% endif %}
                     {% if video.comment_count %}
                         <div>
-                            <i class="material-icons comment-icon">comment</i>
+                            <i class="material-icons">comment</i>
                             <span>{{ video.comment_count }}</span>
                         </div>
                     {% endif %}

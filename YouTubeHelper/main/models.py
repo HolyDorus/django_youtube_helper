@@ -10,20 +10,20 @@ class LikedVideos(models.Model):
         UserModel,
         related_name='liked_videos',
         on_delete=models.CASCADE,
-        verbose_name='User'
+        verbose_name='Пользователь'
     )
     video_id = models.CharField(
-        verbose_name='Video ID',
+        verbose_name='ID Видео',
         max_length=50
     )
     date_time = models.DateTimeField(
-        verbose_name='Date and time',
+        verbose_name='Дата и время',
         auto_now_add=True
     )
 
     class Meta:
-        verbose_name = 'Liked video'
-        verbose_name_plural = 'Liked videos'
+        verbose_name = 'Понравившееся видео'
+        verbose_name_plural = 'Понравившиеся видео'
         ordering = ['-date_time']
 
     def __str__(self):
@@ -32,17 +32,17 @@ class LikedVideos(models.Model):
 
 class SearchStory(models.Model):
     query = models.CharField(
-        verbose_name='Query',
+        verbose_name='Запрос',
         max_length=300
     )
     date_time = models.DateTimeField(
-        verbose_name='Date and time',
+        verbose_name='Дата и время',
         auto_now_add=True
     )
 
     class Meta:
-        verbose_name = 'Search query'
-        verbose_name_plural = 'Search story'
+        verbose_name = 'Поисковый запрос'
+        verbose_name_plural = 'История поиска'
         ordering = ['-date_time']
 
     def __str__(self):
@@ -54,29 +54,33 @@ class SearchCache(models.Model):
         SearchStory,
         related_name='search_cache',
         on_delete=models.CASCADE,
-        verbose_name='Query'
+        verbose_name='Запрос'
     )
     video_id = models.CharField(
-        verbose_name='Video ID',
+        verbose_name='ID Видео',
         max_length=50
     )
     video_title = models.CharField(
-        verbose_name='Title',
+        verbose_name='Название',
         max_length=300
     )
     video_short_description = models.CharField(
-        verbose_name='Short Description',
+        verbose_name='Краткое описание',
         max_length=155
     )
     video_channel_title = models.CharField(
-        verbose_name='Channel Title',
+        verbose_name='Название канала',
         max_length=150
     )
     video_channel_id = models.CharField(
-        verbose_name='Channel ID',
+        verbose_name='ID Канала',
         max_length=50
     )
     video_preview_url = models.CharField(
-        verbose_name='Preview URL',
+        verbose_name='URL картинки',
         max_length=300
     )
+
+    class Meta:
+        verbose_name = 'Кэш поиска'
+        verbose_name_plural = 'Кэш поиска'
