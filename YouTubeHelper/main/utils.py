@@ -137,10 +137,11 @@ class YouTubeAPI:
         return time
 
     def _get_short_description(self, description):
-        if len(description) <= 150:
+        max_description_len = 150
+        if len(description) <= max_description_len:
             return description
 
-        return ' '.join(description[:150].split()[:-1]) + '...'
+        return ' '.join(description[:max_description_len].split()[:-1]) + '...'
 
     def _replace_special_expressions(self, text):
         expressions = {
@@ -205,10 +206,7 @@ class VideoManager:
         return data
 
     def get_user_liked_videos(self, user):
-        liked_videos_ids = []
-
-        for video in user.liked_videos.all():
-            liked_videos_ids.append(video.video_id)
+        liked_videos_ids = user.liked_videos.values_list('video_id', flat=True)
 
         if liked_videos_ids:
             found_videos = self.yt.get_details_about_videos(liked_videos_ids)
