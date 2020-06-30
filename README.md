@@ -26,9 +26,11 @@ poetry run python manage.py migrate
 6. Next, run application
 `poetry run python manage.py runserver`
 
-7. Visit [localhost:8000](localhost:8000)
+7. Visit [localhost:8000](http://localhost:8000) (by default)
 
 ## Screenshots
+The site also has a mobile version.
+
 **Index page:**
 ![Index page](https://drive.google.com/uc?export=view&id=155TuY9_6Fzl-p9hC3LZ1Z03cCZWY9vf1 "Index page")
 
@@ -46,5 +48,3 @@ poetry run python manage.py migrate
 
 **Login page:**
 ![Login page](https://drive.google.com/uc?export=view&id=1rGPDJAQN4ZFsq2r3ZQnHRJVcSfLPmUSX "Login page")
-
-The site also has a mobile version.
