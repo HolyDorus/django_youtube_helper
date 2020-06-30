@@ -1,8 +1,8 @@
-#YouTube Helper
+# YouTube Helper
 A YouTube Helper application allows users to search videos from YouTube and add them to favorite video list.
-##Installation
+## Installation
 All dependencies locate in `pyproject.toml`, so you can use [poetry](https://github.com/python-poetry/poetry)
-1.  You need to download all files from this repository
+1. You need to download all files from this repository
 `git clone https://github.com/HolyDorus/youtube_helper`
 
 2. Use this command to install all dependencies
@@ -28,7 +28,7 @@ poetry run python manage.py migrate
 
 7. Visit [localhost:8000](localhost:8000)
 
-##Screenshots
+## Screenshots
 **Index page:**
 ![Index page](https://drive.google.com/uc?export=view&id=155TuY9_6Fzl-p9hC3LZ1Z03cCZWY9vf1 "Index page")
 
