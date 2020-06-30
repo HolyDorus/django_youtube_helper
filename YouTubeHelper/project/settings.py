@@ -27,10 +27,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('YTH_SECRET_KEY')
+SECRET_KEY = os.getenv('YTH_SECRET_KEY') or ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(strtobool(os.getenv('YTH_DEBUG')))
+DEBUG = bool(strtobool(os.getenv('YTH_DEBUG') or 'False'))
 
 ALLOWED_HOSTS = ['*']
 
@@ -92,11 +92,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('YTH_POSTGRES_NAME'),
-        'USER': os.getenv('YTH_POSTGRES_USER'),
-        'PASSWORD': os.getenv('YTH_POSTGRES_PASS'),
-        'HOST': os.getenv('YTH_POSTGRES_HOST'),
-        'PORT': os.getenv('YTH_POSTGRES_PORT')
+        'NAME': os.getenv('YTH_POSTGRES_NAME') or '',
+        'USER': os.getenv('YTH_POSTGRES_USER') or '',
+        'PASSWORD': os.getenv('YTH_POSTGRES_PASS') or '',
+        'HOST': os.getenv('YTH_POSTGRES_HOST') or '',
+        'PORT': os.getenv('YTH_POSTGRES_PORT') or ''
     }
 }
 
@@ -143,7 +143,7 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # YouTube Data API Key
-YOUTUBE_API_KEY = os.getenv('YTH_YOUTUBE_API_KEY')
+YOUTUBE_API_KEY = os.getenv('YTH_YOUTUBE_API_KEY') or ''
 
 # Use cache system for search results
-SEARCH_RESULTS_CACHE = bool(strtobool(os.getenv('YTH_SEARCH_RESULTS_CACHE')))
+SEARCH_RESULTS_CACHE = bool(strtobool(os.getenv('YTH_SEARCH_RESULTS_CACHE') or 'False'))
