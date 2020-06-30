@@ -66,7 +66,7 @@ class SearchCache(models.Model):
     )
     video_short_description = models.CharField(
         verbose_name='Краткое описание',
-        max_length=155
+        max_length=300
     )
     video_channel_title = models.CharField(
         verbose_name='Название канала',
