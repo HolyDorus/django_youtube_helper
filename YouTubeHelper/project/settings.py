@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from distutils.util import strtobool
+
+from dotenv import load_dotenv
+
+
+# Load .env file
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,10 +27,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'n(u&j0$at#7nyo(6w+-$vtljs)2ktac@8$$yb$(wppz#+bq#)n'
+SECRET_KEY = os.getenv('YTH_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(strtobool(os.getenv('YTH_DEBUG')))
 
 ALLOWED_HOSTS = ['*']
 
@@ -76,10 +83,20 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('YTH_POSTGRES_NAME'),
+        'USER': os.getenv('YTH_POSTGRES_USER'),
+        'PASSWORD': os.getenv('YTH_POSTGRES_PASS'),
+        'HOST': os.getenv('YTH_POSTGRES_HOST'),
+        'PORT': os.getenv('YTH_POSTGRES_PORT')
     }
 }
 
@@ -126,7 +143,7 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # YouTube Data API Key
-YOUTUBE_API_KEY = 'AIzaSyA3aU4WPGe6uVCJGoDKIEWQlss4S7jNZI8'
+YOUTUBE_API_KEY = os.getenv('YTH_YOUTUBE_API_KEY')
 
 # Use cache system for search results
-SEARCH_RESULTS_CACHE = False
+SEARCH_RESULTS_CACHE = bool(strtobool(os.getenv('YTH_SEARCH_RESULTS_CACHE')))
