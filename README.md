@@ -6,19 +6,19 @@ All dependencies locate in `pyproject.toml`, so you can use [poetry](https://git
 `git clone https://github.com/HolyDorus/youtube_helper`
 
 2. Use this command to install all dependencies
-```
-cd youtube_helper
-poetry install
-```
+    ```
+    cd youtube_helper
+    poetry install
+    ```
 
 3. You need to create file `.env`  with filled values (see `.env.example`) or manually add values in your enviroment variables
 
 4. Next, you need to make migrations and migrate
-```
-cd YouTubeHelper
-poetry run python manage.py makemigrations
-poetry run python manage.py migrate
-```
+    ```
+    cd YouTubeHelper
+    poetry run python manage.py makemigrations
+    poetry run python manage.py migrate
+    ```
 
 5. Use this command to create a super user
 `poetry run python manage.py createsuperuser`
